@@ -67,6 +67,10 @@ function showQuestion(){
         button.innerHTML = answer.text
         button.classList.add("btn") // add btn to this button
         answerButtons.appendChild(button) // display this button in html div
+        if(answer.correct){
+            button.dataset.correct = answer.correct
+        }
+        button.addEventListener("click", selectAnswer)
     })
 }
 
@@ -74,6 +78,16 @@ function resetState(){
     nextButton.style.display = "none"
     while(answerButtons.firstChild){
         answerButtons.removeChild(answerButtons.firstChild) // this will remove all previous answers
+    }
+}
+
+function selectAnswer(e){
+    const selectBtn = e.target
+    const isCorrect = selectBtn.dataset.correct === "true"
+    if(isCorrect){
+        selectBtn.classList.add("correct")
+    }else{
+        selectBtn.classList.add("incorrect")
     }
 }
 
