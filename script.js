@@ -90,13 +90,20 @@ function selectAnswer(e){
     }else{
         selectBtn.classList.add("incorrect")
     }
-    Array.from(answerButtons.children).forEach(button=>{
+    Array.from(answerButtons.children).forEach(button=>{ // this will show the correct answer after clicked
         if(button.dataset.correct === "true"){
             button.classList.add("correct")
         }
         button.disabled = true
     })
     nextButton.style.display = "block" // this will display next button
+}
+
+function showScore(){
+    resetState()
+    questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`
+    nextButton.innerHTML = "Play Again"
+    nextButton.style.display = "block"
 }
 
 function handleNextButton(){
