@@ -12,7 +12,7 @@ const questions = [
         {
              question: "Which is the smallest country in the world?",
         answers: [
-            {text:"Vatican City", correct: True},
+            {text:"Vatican City", correct: true},
             {text:"Bhutan", correct: false},
             {text:"Sri Lanka", correct: false},
             {text:"Nepal", correct: false}
@@ -40,11 +40,11 @@ const questions = [
             
         ]
         }
-]
+];
 
-const questionElement = document.getElementById("question")
-const answerButton = document.getElementById("answer-btn")
-const nextButton = document.getElementById("next-btn")
+const questionElement = document.getElementById("question");
+const answerButtons = document.getElementById("answer-button");
+const nextButton = document.getElementById("next-btn");
 
 let currentQuestionIndex = 0
 let score = 0
@@ -57,6 +57,7 @@ function startQuiz(){
 }
 
 function showQuestion(){
+    resetState() // to reset previous question and answers
     let currentQuestion = questions[currentQuestionIndex] // will add index 0 for question 1 and index 1 for question 2 and so on...
     let questionNo = currentQuestionIndex + 1 // will need question number so if the question is 1 then index will be 1 and so on...
     questionElement.innerHTML = questionNo + ". " + currentQuestion.question
@@ -65,6 +66,15 @@ function showQuestion(){
         const button = document.createElement("button") // create button tag
         button.innerHTML = answer.text
         button.classList.add("btn") // add btn to this button
-        answerButton.appendChild(button) // display this button in html div
+        answerButtons.appendChild(button) // display this button in html div
     })
 }
+
+function resetState(){
+    nextButton.style.display = "none"
+    while(answerButtons.firstChild){
+        answerButtons.removeChild(answerButtons.firstChild) // this will remove all previous answers
+    }
+}
+
+startQuiz()
