@@ -67,6 +67,10 @@ function showQuestion(){
         button.innerHTML = answer.text
         button.classList.add("btn") // add btn to this button
         answerButtons.appendChild(button) // display this button in html div
+        if(answer.correct){
+            button.dataset.correct = answer.correct
+        }
+        button.addEventListener("click", selectAnswer)
     })
 }
 
@@ -76,5 +80,47 @@ function resetState(){
         answerButtons.removeChild(answerButtons.firstChild) // this will remove all previous answers
     }
 }
+
+function selectAnswer(e){
+    const selectBtn = e.target
+    const isCorrect = selectBtn.dataset.correct === "true"
+    if(isCorrect){
+        selectBtn.classList.add("correct")
+        score++;
+    }else{
+        selectBtn.classList.add("incorrect")
+    }
+    Array.from(answerButtons.children).forEach(button=>{ // this will show the correct answer after clicked
+        if(button.dataset.correct === "true"){
+            button.classList.add("correct")
+        }
+        button.disabled = true
+    })
+    nextButton.style.display = "block" // this will display next button
+}
+
+function showScore(){
+    resetState()
+    questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`
+    nextButton.innerHTML = "Play Again"
+    nextButton.style.display = "block"
+}
+
+function handleNextButton(){
+    currentQuestionIndex++
+    if(currentQuestionIndex < questions.length){
+        showQuestion()
+    }else{
+        showScore()
+    }
+}
+
+nextButton.addEventListener("click", ()=>{
+    if(currentQuestionIndex < questions.length){
+        handleNextButton()
+    }else{
+        startQuiz()
+    }
+})
 
 startQuiz()
