@@ -90,7 +90,7 @@ function selectAnswer(e){
     }else{
         selectBtn.classList.add("incorrect")
     }
-    Array.from(answerButtons.children).forEach(button=>{
+    Array.from(answerButtons.children).forEach(button=>{ // this will show the correct answer after clicked
         if(button.dataset.correct === "true"){
             button.classList.add("correct")
         }
